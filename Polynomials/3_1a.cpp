@@ -122,7 +122,7 @@ int main()
     Polinomial P (v1, v1.size() - 1);
     Polinomial Q (v2, v2.size() - 1);
 
-    Polinomial N = P * Q;
+    Polinomial N = P - Q;
 
     for (int i = 0; i <= N.degree; i++)
     {

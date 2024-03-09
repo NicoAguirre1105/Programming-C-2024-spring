@@ -199,61 +199,15 @@ Polynomial operator% (Polynomial P, Polynomial Q)
     return N;
 }
 
-ostream & operator << (ostream &st, Polynomial P)
-{
-    bool first_term = true;
-    for (int i = 0; i <= P.degree; i++)
-    {
-        if (P[i] == 0) 
-            continue;
-        if (!first_term)
-        {
-            if(P[i] < 0)
-                st << " - ";
-            else
-                st << " + ";
-        } else first_term = false;
-
-        if (P[i] != 1)
-        {
-            if(P[i] > 0)
-                st << P[i];
-            else
-                st << -P[i];
-        }
-        if (i != 0)
-            st << "x";
-        if (i > 1)
-            st << "^" << i;
-    }
-    st << endl;
-    return st;
-}
-
-istream & operator >> (istream &st, Polynomial P)
-{ 
-    double x;
-    int count = 0;
-    Polynomial aux;
-    P = aux;
-    while (cout << "Insert coefficient for x^" << count << ": ", st >> x)
-    {
-        Polynomial Q (x, count);
-        P = P + Q;
-        count++;
-    }
-    st.clear();
-    return st;
-}
-
 int main()
 {
     Polynomial P {0, 1, 0, 2};
     Polynomial Q {-9, 3};
 
-    Polynomial N = P + Q;
-    cin >> P;
-    cout << P;
+    Polynomial N = P / Q;
+    N.print();
+    N = P % Q;
+    N.print();
 
     return EXIT_SUCCESS;
 }
