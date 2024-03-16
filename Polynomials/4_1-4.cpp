@@ -39,19 +39,6 @@ class Polynomial
         P.degree = 0;
     }
 
-    double value(double x)
-    {
-        double ans = 0;
-        double exp = 1;
-        for(int i = 0; i <= degree; i++)
-        {
-            ans = ans + coef[i]*exp;
-            exp *= x;
-        }
-
-        return ans;
-    }
-
     double & operator[] (int i)
     {
         static double c = -1;
@@ -77,6 +64,20 @@ class Polynomial
         return *this;
     }
 
+    int operator () (double x) 
+    {
+        double ans = 0;
+        double exp = 1;
+        for(int i = 0; i <= degree; i++)
+        {
+            ans = ans + coef[i]*exp;
+            exp *= x;
+        }
+
+        cout << ans << endl;
+        return ans;
+    }
+
     Polynomial & operator = (Polynomial && P)
     {
         if(this == &P) return *this;
@@ -85,7 +86,8 @@ class Polynomial
         degree = P.degree;
         coef = P.coef;
 
-        move(P);
+        P.coef = nullptr;
+        P.degree = 0;
 
         return *this;
     }
@@ -260,9 +262,7 @@ int main()
     Polynomial P {0, 1, 0, 2};
     Polynomial Q {-9, 3};
 
-    Polynomial M = P + Q;
-    cin >> P;
-    cout << P;
+    cout << Q(-1) << endl;
 
     return EXIT_SUCCESS;
 }
