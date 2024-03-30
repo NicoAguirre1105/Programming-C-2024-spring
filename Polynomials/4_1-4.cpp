@@ -39,7 +39,7 @@ class Polynomial
         P.degree = 0;
     }
 
-    double & operator[] (int i)
+    double & operator[] (int i) const
     {
         static double c = -1;
 
@@ -64,7 +64,7 @@ class Polynomial
         return *this;
     }
 
-    int operator () (double x) 
+    double operator () (double x) const
     {
         double ans = 0;
         double exp = 1;
@@ -74,7 +74,6 @@ class Polynomial
             exp *= x;
         }
 
-        cout << ans << endl;
         return ans;
     }
 
@@ -262,7 +261,9 @@ int main()
     Polynomial P {0, 1, 0, 2};
     Polynomial Q {-9, 3};
 
-    cout << Q(-1) << endl;
+    cout << Q[1] << endl;
+    Q[1] = 5;
+    cout << Q[1] << endl;
 
     return EXIT_SUCCESS;
 }
