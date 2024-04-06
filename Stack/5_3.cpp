@@ -16,7 +16,7 @@ bool isNumber(string s)
             else
             {
                 cout<< "Wrong input" << endl;
-                exit(401);
+                exit(-1);
             }
         }
         number = true;
@@ -126,7 +126,6 @@ class Stack
         }
     }
 };
-
  
 
 int main () 

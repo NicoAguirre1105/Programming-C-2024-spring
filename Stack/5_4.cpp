@@ -41,7 +41,6 @@ void f1(stack<double> &S, char c)
     {
         S.push(first - second);
     }
-    cout << S.empty() << endl;
 }
 
 void f1(stack<double> &S, double x)
@@ -62,6 +61,7 @@ void f2(stack<double> &S, stack<char> &Oper, char c = -1)
             f1(S, (double)stoi(str_num));
             str_num = "";
         }
+
         if (c == -1)
         {
             while (!Oper.empty())
