@@ -50,7 +50,7 @@ class Queue
 int main()
 {
     Queue Q;
-     cout << Q.empty() << endl;
+    cout << Q.empty() << endl;
     Q.push(5);
     cout << Q.empty() << endl;
     Q.push(3);
