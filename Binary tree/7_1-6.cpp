@@ -33,13 +33,14 @@ class BTree
 
     BNode *leftGrandchild() 
     {
-        if (root->left->left != nullptr)
+        if (root == nullptr) return nullptr;
+        if (root->left != nullptr && root->left->left != nullptr)
             return root->left->left;
-        else if (root->left->right != nullptr)
+        else if (root->left != nullptr && root->left->right != nullptr)
             return root->left->right;
-        else if (root->right->left != nullptr)
+        else if (root->right != nullptr && root->right->left != nullptr)
             return root->right->left;
-        else if (root->right->right != nullptr)
+        else if (root->right != nullptr && root->right->right != nullptr)
             return root->right->right;
         else
             return NULL;
@@ -168,7 +169,6 @@ class BTree
         root->right = aux->left;
         aux->left = root;
         root = aux;
-
     }
 
     void print() // метод печати
