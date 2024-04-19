@@ -14,14 +14,14 @@ struct BNode
     BNode (double x, BNode *l=nullptr, BNode *r=nullptr): data(x), left(l), right(r) {}
 };
 
-double n_sum(BNode *p)
+double BTree::n_sum(BNode *p)
 {
     if (p == nullptr)
         return 0;
     return p->data + n_sum(p->left) + n_sum(p->right);
 }
 
-int n_neg_count(BNode *p)
+int BTree::n_neg_count(BNode *p)
 {
     if (p == nullptr)
         return 0;
@@ -31,7 +31,7 @@ int n_neg_count(BNode *p)
         return 0 + n_neg_count(p->left) + n_neg_count(p->right);
 }
 
-int n_height(BNode *p)
+int BTree::n_height(BNode *p)
 {
     if (p == nullptr)
         return 0;
@@ -42,7 +42,7 @@ int n_height(BNode *p)
     return x1 >= x2 ? x1 + 1 : x2 + 1;
 }
 
-void n_reflect(BNode *p)
+void BTree::n_reflect(BNode *p)
 {
     if (p == nullptr)
         return;
@@ -63,7 +63,7 @@ double n_mult(BNode *p)
     return p->left->data * p->right->data;
 }
 
-double n_eval(BNode *p)
+double BTree::n_eval(BNode *p)
 {
     if (p->left == nullptr)
         return p->data;
@@ -83,7 +83,7 @@ double n_eval(BNode *p)
     }
 }
 
-BNode* n_find(BNode *p, double x)
+BNode* BTree::n_find(BNode *p, double x)
 {
     if (p == nullptr)
         return nullptr;
@@ -101,7 +101,7 @@ BNode* n_find(BNode *p, double x)
     return nullptr;
 }
 
-double n_min(BNode *p)
+double BTree::n_min(BNode *p)
 {
     if (p->left != nullptr && p->right != nullptr)
     {
@@ -127,14 +127,14 @@ double n_min(BNode *p)
     }
 }
 
-void f_print(BNode* r, int indent = 1) 
+void BTree::fprint(BNode* r, int indent = 1) 
 {
     if (r == nullptr) return;
-    f_print(r->right, indent + 3);
+    fprint(r->right, indent + 3);
     for (int i = 0; i < indent; ++i)
         cout << ' ';
     cout << r->data << endl;
-    f_print(r->left, indent + 3);
+    fprint(r->left, indent + 3);
 }
 
 class BTree
@@ -146,7 +146,7 @@ class BTree
 
     void print() // метод печати
     {
-        f_print(root); // вызывает рекурсивную функцию
+        fprint(root); // вызывает рекурсивную функцию
     }
 
     double sum()
@@ -183,6 +183,16 @@ class BTree
     {
         return n_min(root);
     }
+
+    private:
+    static void fprint(BNode *p, int indent = 1);
+    static double n_sum(BNode *p);
+    static int n_neg_count(BNode *p);
+    static int n_height(BNode *p);
+    static void n_reflect(BNode *p);
+    static double n_eval(BNode *p);
+    static BNode* n_find(BNode *p, double x);
+    static double n_min(BNode *p);
 };
 
 int main ()
