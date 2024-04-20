@@ -3,14 +3,14 @@
 
 using namespace std;
 
-struct BNode 
+struct UNode 
 {
     double data;
-    BNode *parent=nullptr;
-    BNode *left;
-    BNode *right;
+    UNode *parent=nullptr;
+    UNode *left;
+    UNode *right;
 
-    BNode (double d, BNode *l=nullptr, BNode *r=nullptr): data(d), left(l), right(r) 
+    UNode (double d, UNode *l=nullptr, UNode *r=nullptr): data(d), left(l), right(r) 
     {
         if (l != nullptr)
         {
@@ -23,7 +23,7 @@ struct BNode
     }
 };
 
-void f_print(BNode* r, int indent = 1) 
+void f_print(UNode* r, int indent = 1) 
 {
     if (r == nullptr) return;
     f_print(r->right, indent + 3);
@@ -33,16 +33,16 @@ void f_print(BNode* r, int indent = 1)
     f_print(r->left, indent + 3);
 }
 
-class BTree
+class UTree
 {
-    BNode *root;
+    UNode *root;
 
     public:
-    BTree (BNode *r): root(r) {}
+    UTree (UNode *r): root(r) {}
 
     void rotateLeft()
     {
-        BNode *aux = root->right;
+        UNode *aux = root->right;
         root->right = aux->left;
         aux->left->parent = root;
         aux->left = root;
@@ -51,7 +51,7 @@ class BTree
         root = aux;
     }
 
-    void deleteNode(BNode *p)
+    void deleteNode(UNode *p)
     {
         if (p == root)
         {
@@ -67,8 +67,8 @@ class BTree
             return;
         }
 
-        BNode *parent = p->parent;
-        BNode *newChild;
+        UNode *parent = p->parent;
+        UNode *newChild;
         bool dir_left;
 
         if (parent->left == p)
@@ -105,16 +105,16 @@ class BTree
 
 int main () 
 {
-    BNode *p6 = new BNode(6),
-    *p7 = new BNode(7),
-    *p8 = new BNode(8),
-    *p5 = new BNode(5, p7),
-    *p4 = new BNode(4),
-    *p3 = new BNode(3, p6, p8),
-    *p2 = new BNode(2, p4, p5),
-    *p1 = new BNode (1, p2, p3);
+    UNode *p6 = new UNode(6),
+    *p7 = new UNode(7),
+    *p8 = new UNode(8),
+    *p5 = new UNode(5, p7),
+    *p4 = new UNode(4),
+    *p3 = new UNode(3, p6, p8),
+    *p2 = new UNode(2, p4, p5),
+    *p1 = new UNode (1, p2, p3);
 
-    BTree T(p1);
+    UTree T(p1);
 
     T.print();
     T.rotateLeft();
