@@ -39,6 +39,10 @@ class UTree
 
     public:
     UTree (UNode *r): root(r) {}
+    UTree (UTree &T)
+    {
+        root = n_copy(T.root);
+    }
 
     void rotateLeft()
     {
@@ -101,7 +105,18 @@ class UTree
     {
         f_print(root); // вызывает рекурсивную функцию
     }
+
+    private:
+    static UNode *n_copy(UNode *p);
 };
+
+UNode *UTree::n_copy(UNode *p)
+{
+    if (p == nullptr)
+        return nullptr;
+    UNode *q = new UNode(p->data, n_copy(p->left), n_copy(p->right));
+    return q;
+}
 
 int main () 
 {
@@ -122,6 +137,9 @@ int main ()
     T.deleteNode(p5);
     T.print();
     cout << p1->parent->data << " " << p6->parent->data << " " << (p3->parent == nullptr) << " " << p8->parent->data << endl;  
+
+    UTree Q = T;
+    Q.print();
 
     return EXIT_SUCCESS;
 }
