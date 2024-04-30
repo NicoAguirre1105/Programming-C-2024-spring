@@ -8,9 +8,17 @@ struct Node
 {
     int key;
     string data;
+    Node *parent;
     Node *right;
     Node *left;
-    Node(int k, string d, Node *l=nullptr, Node *r=nullptr): data(d), right(r), left(l), key(k) {}
+    Node(int k, string d, Node *l=nullptr, Node *r=nullptr): data(d), right(r), left(l), key(k) {
+        if(left != nullptr)
+            left->parent = this;
+        
+        if(right != nullptr)
+            right->parent = this;
+    }
+    Node(): data(""), key(NULL), right(nullptr), left(nullptr) {}
 };
 
 void f_print(Node* r, int indent = 1) 
@@ -159,6 +167,61 @@ class Tree
         }
     }
 
+    void find_range(int key, Node *&down_bound, Node *&up_bound)
+    {
+        Node *aux = root;
+        down_bound = nullptr;
+        up_bound = nullptr;
+
+        while(aux != nullptr)
+        {
+            if (aux->key == key)
+            {
+                up_bound = aux;
+                down_bound = aux;
+                return;
+            }
+
+            if (aux->key > key)
+            {
+                if (up_bound == nullptr || (up_bound->key - key) > (aux->key - key))
+                    up_bound = aux;
+
+                aux = aux->left;
+            } else 
+            {
+                if (down_bound == nullptr || (key - down_bound->key) > (key - aux->key))
+                    down_bound = aux;
+                aux = aux->right;
+            }
+        }
+    }
+
+    Node *next_key(Node *p)
+    {
+        Node *ans = p->parent;
+        Node *aux = p->right;
+
+        while (ans != nullptr)
+        {
+            if (ans->key > p->key)
+                break;
+            ans = ans->parent;
+        }
+        
+
+        while (aux != nullptr)
+        {
+            if (ans == nullptr || (ans->key - p->key) > (aux->key - p->key))
+            {
+                ans = aux;
+            }
+            aux = aux->left;
+        }
+        
+        return ans;
+    }
+
     private:
     static void n_insert(Node *p, Node *new_n);
     static Node *n_find(Node *p, int key);
@@ -289,25 +352,27 @@ Node *Tree::n_find_wrong(Node *p)
 
 int main ()
 {
-    Node *p6 = new Node(7, "7"),
+    Node *p6 = new Node(8, "8"),
     *p9 = new Node(-10, "-10"),
     // *p8 = new Node(-2, "-2"),
      *p8 = new Node(-6, "-6"),
     *p7 = new Node(-5, "-5", p9, p8),
     *p10 = new Node(3, "3"),
-    *p4 = new Node(6, "6", nullptr, p6),
-    *p3 = new Node(8, "8", p4),
+    *p4 = new Node(7, "7", nullptr, p6),
+    *p3 = new Node(10, "10", p4),
     *p1 = new Node (5, "5", nullptr, p3),
     *p5 = new Node(4, "4", p10, p1),
     *p2 = new Node(2, "2", p7, p5);
 
     Tree G(p2);
 
-    G.print();
-    cout << G.check() << endl;
     G.correct();
-    G.del_max(7);
     G.print();
+    Node *up = nullptr;
+    Node *down = nullptr;
+    G.find_range(9, up, down);
+    cout << up->key << " " << down->key << endl; 
+    cout << G.next_key(p6)->key << endl;
 
     return EXIT_SUCCESS;
 }
