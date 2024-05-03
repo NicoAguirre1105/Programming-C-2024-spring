@@ -136,27 +136,82 @@ class Tree
 
         if (!found)
             cout << "Key not found" << endl;
-        
-        Node *last_parent;
-        Node *last = aux->right;
-        while (last->left != nullptr)
+
+        if (aux == root)
         {
-            last_parent = last;
-            last = last->left;
+            if (aux->right == nullptr && aux->left == nullptr)
+                root = nullptr;
+            else if (aux->right == nullptr)
+                root = aux->left;
+            else if (aux->left == nullptr)
+                root = aux->right;
+            else
+            {
+                Node *last_parent;
+                Node *last;
+                last = aux->right;
+                while (last->left != nullptr)
+                {
+                    last_parent = last;
+                    last = last->left;
+                }
+                
+                root = last;
+
+                if (last_parent->left == last)
+                    last_parent->left = last->right;
+                else
+                    last_parent->right = last->right;
+
+                last->right = aux->right;
+                last->left = aux->left;
+            }
+            delete aux;
+            return;
         }
-        
-        if (parent->left == aux)
-            parent->left = last;
-        else
-            parent->right = last;
 
-        if (last_parent->left == last)
-            last_parent->left = last->right;
-        else
-            last_parent->right = last->right;
+        if (aux->right == nullptr && aux->left == nullptr)
+        {
+            if (parent->left == aux)
+                parent->left = nullptr;
+            else
+                parent->right = nullptr;
+        } else if (aux->right == nullptr)
+        {
+            if (parent->left == aux)
+                parent->left = aux->left;
+            else
+                parent->right = aux->left;
+        } else if (aux->left == nullptr)
+        {
+            if (parent->left == aux)
+                parent->left = aux->right;
+            else
+                parent->right = aux->right;
+        } else
+        {
+            Node *last_parent;
+            Node *last;
+            last = aux->right;
+            while (last->left != nullptr)
+            {
+                last_parent = last;
+                last = last->left;
+            }
+            
+            if (parent->left == aux)
+                parent->left = last;
+            else
+                parent->right = last;
 
-        last->right = aux->right;
-        last->left = aux->left;
+            if (last_parent->left == last)
+                last_parent->left = last->right;
+            else
+                last_parent->right = last->right;
+
+            last->right = aux->right;
+            last->left = aux->left;
+        }
         delete aux;
     }
 
@@ -297,11 +352,11 @@ int main ()
 
     G.print();
 
-    Node *found = G.find_rec(10);
-    Node *found1 = G.find_rec(5);
-    cout << found->data << endl;
-    cout << found1->data << endl;
-    G.del_node_cycle(3);
+    // Node *found = G.find_rec(10);
+    // Node *found1 = G.find_rec(5);
+    // cout << found->data << endl;
+    // cout << found1->data << endl;
+    G.del_node_cycle(2);
     G.print();
 
     return EXIT_SUCCESS;
