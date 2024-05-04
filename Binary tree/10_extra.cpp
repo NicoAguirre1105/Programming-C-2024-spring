@@ -184,13 +184,13 @@ class Tree
 
             if (aux->key > key)
             {
-                if (up_bound == nullptr || (up_bound->key - key) > (aux->key - key))
+                if (up_bound == nullptr || (up_bound->key) > (aux->key))
                     up_bound = aux;
 
                 aux = aux->left;
             } else 
             {
-                if (down_bound == nullptr || (key - down_bound->key) > (key - aux->key))
+                if (down_bound == nullptr || (down_bound->key) < (aux->key))
                     down_bound = aux;
                 aux = aux->right;
             }
@@ -212,10 +212,7 @@ class Tree
 
         while (aux != nullptr)
         {
-            if (ans == nullptr || (ans->key - p->key) > (aux->key - p->key))
-            {
-                ans = aux;
-            }
+            ans = aux;
             aux = aux->left;
         }
         
@@ -372,7 +369,7 @@ int main ()
     Node *down = nullptr;
     G.find_range(9, up, down);
     cout << up->key << " " << down->key << endl; 
-    cout << G.next_key(p6)->key << endl;
+    cout << G.next_key(p8)->key << endl;
 
     return EXIT_SUCCESS;
 }

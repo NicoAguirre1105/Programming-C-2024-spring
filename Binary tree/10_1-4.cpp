@@ -135,7 +135,10 @@ class Tree
         }
 
         if (!found)
+        {
             cout << "Key not found" << endl;
+            return;
+        }
 
         if (aux == root)
         {
@@ -147,7 +150,7 @@ class Tree
                 root = aux->right;
             else
             {
-                Node *last_parent;
+                Node *last_parent = aux;
                 Node *last;
                 last = aux->right;
                 while (last->left != nullptr)
@@ -190,7 +193,7 @@ class Tree
                 parent->right = aux->right;
         } else
         {
-            Node *last_parent;
+            Node *last_parent = aux;
             Node *last;
             last = aux->right;
             while (last->left != nullptr)
